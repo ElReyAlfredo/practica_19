@@ -1,16 +1,17 @@
-const mongoose = require("mongoose");
-const express = require("express");
-const personsRoutes = require("./routes/persons");
-require("dotenv").config();
+const mongoose = require("mongoose"); //inyectamos la dependencia de mongoose
+const express = require("express"); //inyectamos express
+const personsRoutes = require("./routes/persons"); //inyectamos el persons de routes
+require("dotenv").config(); //inyectamos la variable de ambiente para MONGODB_URI en el .env
 
 mongoose.Promise = global.Promise;
-const app = express();
-const port = process.env.PORT || 3000;
+const app = express(); //instanciamos express
+const port = process.env.PORT || 3000; //configuramos el puerto de escucha
 
-app.set("view engine", "ejs");
-app.use(express.urlencoded({ extended: false }));
-app.use(personsRoutes);
+app.set("view engine", "ejs"); //etablecemos la configuracion para el motor de vistas
+app.use(express.urlencoded({ extended: false })); //Analizamos los request entrantes
+app.use(personsRoutes); //usamos el personsRoutes
 
+//Nos conectamos a la base de datos de mongo
 mongoose
   .connect(process.env.MONGODB_URI)
   .then(() => console.log("Conectado a TEST"))
